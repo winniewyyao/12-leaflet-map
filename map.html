@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet Functions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="leaflet/leaflet.css" rel="stylesheet">
+  <style>
+      #map{ 
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: -1;
+      }
+      .sidebar{
+          max-width: 30vw;
+      }
+      .sidebar li{
+          cursor: pointer;
+      }
+  </style>
+</head>
+<body>
+
+
+    <!-- map holder -->
+    <div id="map"></div>
+
+
+    <!-- bootstrap dropdown https://getbootstrap.com/docs/5.3/components/dropdowns -->
+    <div class="dropdown-holder d-flex w-75 ms-auto pt-3 pe-3">
+      <div class="dropdown ms-auto">
+        <button class="dropdown-toggle btn btn-secondary" type="button" data-bs-toggle="dropdown">
+          Select a location
+        </button>
+        <ul class="dropdown-menu">
+          <li><a id="seattle" class="dropdown-item" href="#">Seattle, WA</a></li>
+          <li><a id="austin" class="dropdown-item" href="#">Austin, TX</a></li>
+          <li><a id="chicago" class="dropdown-item" href="#">Chicago, IL</a></li>
+          <li><a id="miami" class="dropdown-item" href="#">Miami, FL</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- jquery and leaflet libraries -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+    <script src="leaflet/leaflet.js"></script>
+
+
+    <!-- your custom code below-->
+    <script>
+
+        const map = L.map('map', {scrollWheelZoom: true, dragging: true}).setView([38.416, -97.81], 4);
+
+        //const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+        //tiles.addTo(map);
+
+        const Stadia_Outdoors = L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.{ext}', {
+	        minZoom: 0,
+	        maxZoom: 20,
+	        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	        ext: 'png'
+        });
+
+        Stadia_Outdoors.addTo(map);
+
+        const popup = L.popup();
+
+        $("#seattle").on("click", function(){
+
+            //change tag on drop-down button
+            $("button.dropdown-toggle").text("Seattle, WA");
+
+            map.flyTo([47.60,-122.33], 10);
+            popup.setLatLng([47.60,-122.33]);
+            popup.setContent('<h2>Vibrant Coffee!</h2><figure><img src="/images/seattle-coffee.jpeg" alt="Seattle Vibrant Coffee" style="width: 100%"></figure><figurecaption style="text-align: center">source: adobe stock</figurecaption>');
+            popup.openOn(map);
+        });
+
+        $("#austin").on("click", function(){
+            
+            //change tag on drop-down button
+            $("button.dropdown-toggle").text("Austin, TX");
+
+            map.flyTo([30.26,-97.74], 10);
+            popup.setLatLng([30.26,-97.74]);
+            popup.setContent('<h2>Live Music!</h2><figure><img src="/images/austin-live-music.jpeg" alt="Austin Live Music" style="width:100%"></figure><figcaption style="text-align: center">source: adobe stock</figcaption>');
+            popup.openOn(map);
+        });
+
+        $("#chicago").on("click", function(){
+
+            //change tag on drop-down button
+            $("button.dropdown-toggle").text("Chicago, IL");
+
+            map.flyTo([41.87,-87.62], 10);
+            popup.setLatLng([41.87,-87.62]);
+            popup.setContent('<h2>Prominent Lakefront!</h2><figure><img src="/images/chicago-river.jpeg" alt="Chicago River" style="width:100%"></figure><figcaption style="text-align: center">source: adobe stock</figcaption>');
+            popup.openOn(map);
+        });
+
+        $("#miami").on("click", function(){
+
+            //change tag on drop-down button
+            $("button.dropdown-toggle").text("Miami, FL");
+
+            map.flyTo([25.77,-80.19], 10);
+            popup.setLatLng([25.77,-80.19]);
+            popup.setContent('<h2>Beautiful Beaches!</h2><figure><img src="/images/miami-beach.jpeg" alt="Miami Beaches" style="width:100%"></figure><figcaption style="text-align: center">source: adobe stock</figcaption>');
+            popup.openOn(map);
+        });
+
+    </script>
+  </body>
+</html>
